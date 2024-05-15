@@ -1,11 +1,5 @@
 package models
 
-import (
-	"database/sql/driver"
-	"encoding/json"
-	"fmt"
-)
-
 type Book struct {
 	BookId          uint   `gorm:"primaryKey"`
 	Title           string `gorm:"not null"`
@@ -21,7 +15,7 @@ type Pubyear struct {
 	Month string
 }
 
-// Implement the Scanner interface for Pubyear
+/*// Implement the Scanner interface for Pubyear
 func (py *Pubyear) Scan(value interface{}) error {
 	if value == nil {
 		return nil
@@ -40,14 +34,4 @@ func (py Pubyear) Value() (driver.Value, error) {
 	}
 	return json.Marshal(py)
 }
-
-func (py *Book) Scan(value interface{}) error {
-	if value == nil {
-		return nil
-	}
-	data, ok := value.([]byte)
-	if !ok {
-		return fmt.Errorf("Failed to scan Pubyear, invalid data type")
-	}
-	return json.Unmarshal(data, py)
-}
+*/
