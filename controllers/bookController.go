@@ -7,16 +7,6 @@ import (
 	"log"
 )
 
-/*
-	type bodyBook struct {
-		Title           string
-		Author          string
-		PublicationYear models.Pubyear
-		Isbn            string
-		NumberInShelf   int
-		NumberBorrowed  int
-	}
-*/
 func BookGetAll(c *gin.Context) {
 	var books []models.Book
 	result := initialazers.DB.Find(&books)
@@ -25,9 +15,7 @@ func BookGetAll(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"Post": books,
-	})
+	c.JSON(200, books)
 
 }
 
@@ -35,9 +23,7 @@ func BookGet(c *gin.Context) {
 	var book models.Book
 	id := c.Param("id")
 	initialazers.DB.First(&book, id)
-	c.JSON(200, gin.H{
-		"Post": book,
-	})
+	c.JSON(200, book)
 }
 
 func BookCreate(c *gin.Context) {
@@ -46,80 +32,62 @@ func BookCreate(c *gin.Context) {
 
 	err := c.Bind(&body)
 	if err != nil {
-		log.Fatal("could not bind")
+		log.Println("could not bind" + err.Error())
 		return
 	}
-	book := models.Book{
-		Title:           body.Title,
-		Author:          body.Author,
-		PublicationYear: body.PublicationYear,
-		Isbn:            body.Isbn,
-		NumberInShelf:   body.NumberInShelf,
-		NumberBorrowed:  body.NumberBorrowed,
+	err = models.Validate.Struct(body)
+	if err != nil {
+		log.Println("could not validate" + err.Error())
+		return
 	}
 
-	result := initialazers.DB.Create(&book)
+	result := initialazers.DB.Create(&body)
 
 	if result.Error != nil {
-		log.Fatal("could not create post")
+		log.Println("could not create post")
 		c.Status(400)
 	}
 	c.JSON(200, gin.H{
-		"book": book,
+		"book": body,
 	})
 
 }
 
 func BookUpdate(c *gin.Context) {
 	var book, body models.Book
-
-	id := c.Param("BookId")
-	initialazers.DB.First(&book, id)
+	id := c.Param("id")
+	if id == "" {
+		log.Println("no id")
+		return
+	}
+	dbErr := initialazers.DB.First(&book, id)
+	if dbErr != nil {
+		log.Println("could not validate")
+		return
+	}
 
 	err := c.Bind(&body)
 	if err != nil {
-		log.Fatal("could not bind")
+		log.Println("could not bind")
 		return
 	}
-	book.Title = body.Title
-	book.Title = body.Title
-	book.Author = body.Author
-	book.PublicationYear = body.PublicationYear
-	book.Isbn = body.Isbn
-	book.NumberInShelf = body.NumberInShelf
-	book.NumberBorrowed = body.NumberBorrowed
-	initialazers.DB.Save(&book)
-}
 
-/*func BookUpdate2(c *gin.Context) {//todo : use this one instead
-	var book models.Book
-	var bodyBook struct {
-		Title           string
-		Author          string
-		PublicationYear pgtype.Timestamp
-		Isbn            string
-		NumberInShelf   int
-		NumberBorrowed  int
-	}
-	id := c.Param("id")
-	initialazers.DB.First(&book, id)
-
-	err := c.Bind(&bodyBook)
-
-	initialazers.DB.Model(&book).Updates(models.Book{
-		Title: bodyBook.Title,
-		Author: bodyBook.Author,
-		PublicationYear : bodyBook.PublicationYear,
-		Isbn            : bodyBook.Isbn,
-		NumberInShelf   : bodyBook.NumberInShelf,
-		NumberBorrowed  : bodyBook.NumberBorrowed,
-	})
+	err = models.Validate.Struct(body)
 	if err != nil {
-		log.Fatal("could not bind")
+		log.Println("could not validate")
+		return
+	}
+	dbErr = initialazers.DB.Model(&book).Updates(body).Where("book_id = ?", id)
+	if dbErr != nil {
+		log.Println("could not update")
 		return
 	}
 
-}*/
+	c.JSON(200, gin.H{
+		"book": book,
+	})
+
+}
 
 /*func PostDelete(c *gin.Context) {
 	var book models.Book
