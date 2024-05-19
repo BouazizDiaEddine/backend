@@ -7,13 +7,13 @@ import (
 )
 
 type Book struct {
-	BookId          uint   `gorm:"primaryKey"`
-	Title           string `gorm:"not null"`
-	Author          string
+	BookId          uint    `gorm:"primaryKey"`
+	Title           string  `gorm:"not null" validate:"required"`
+	Author          string  `validate:"required"`
 	PublicationYear PubYear `gorm:"type:jsonb"`
-	Isbn            string  `gorm:"size:10;not null;unique"`
-	NumberInShelf   int     //`gorm:"size>0;not null"`
-	NumberBorrowed  int     //`gorm:"size>0;not null"`
+	Isbn            string  `gorm:"size:10;not null;unique" validate:"required"`
+	NumberInShelf   int     `validate:"min=0"`
+	NumberBorrowed  int     `validate:"min=0"`
 }
 
 type PubYear struct {
