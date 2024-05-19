@@ -3,7 +3,9 @@ package controllers
 import (
 	"backend/initialazers"
 	"backend/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"log"
 )
 
@@ -11,7 +13,10 @@ func BookGetAll(c *gin.Context) {
 	var books []models.Book
 	result := initialazers.DB.Find(&books)
 	if result.Error != nil {
-		log.Fatal("could not retrieve objects")
+		log.Println("could not retrieve objects")
+		c.JSON(400, gin.H{
+			"Error": "server might be down",
+		})
 		return
 	}
 
@@ -23,24 +28,32 @@ func BookGet(c *gin.Context) {
 	var book models.Book
 	id := c.Param("id")
 	initialazers.DB.First(&book, id)
+	if book.BookId == 0 {
+		c.JSON(400, gin.H{
+			"Error": "book does not exist",
+		})
+		return
+	}
 	c.JSON(200, book)
 }
 
 func BookCreate(c *gin.Context) {
 
 	var body models.Book
-
+	var validationErrors string
 	err := c.Bind(&body)
 	if err != nil {
 		log.Println("could not bind" + err.Error())
 		return
 	}
-	err = models.Validate.Struct(body)
-	if err != nil {
-		log.Println("could not validate" + err.Error())
+
+	validationErrors = validateBook(body)
+	if validationErrors != "" {
+		c.JSON(400, gin.H{
+			"Error": validationErrors,
+		})
 		return
 	}
-
 	result := initialazers.DB.Create(&body)
 
 	if result.Error != nil {
@@ -54,15 +67,18 @@ func BookCreate(c *gin.Context) {
 }
 
 func BookUpdate(c *gin.Context) {
+	validationErrors := ""
 	var book, body models.Book
 	id := c.Param("id")
 	if id == "" {
 		log.Println("no id")
 		return
 	}
-	dbErr := initialazers.DB.First(&book, id)
-	if dbErr != nil {
-		log.Println("could not validate")
+	initialazers.DB.First(&book, id)
+	if book.BookId == 0 {
+		c.JSON(400, gin.H{
+			"Error": "the book you are trying to edit does not exist",
+		})
 		return
 	}
 
@@ -72,16 +88,15 @@ func BookUpdate(c *gin.Context) {
 		return
 	}
 
-	err = models.Validate.Struct(body)
-	if err != nil {
-		log.Println("could not validate")
+	validationErrors = validateBook(body)
+	if validationErrors != "" {
+		c.JSON(400, gin.H{
+			"Error": validationErrors,
+		})
 		return
 	}
-	dbErr = initialazers.DB.Model(&book).Updates(body).Where("book_id = ?", id)
-	if dbErr != nil {
-		log.Println("could not update")
-		return
-	}
+
+	initialazers.DB.Model(&book).Updates(body).Where("book_id = ?", id)
 
 	c.JSON(200, gin.H{
 		"book": book,
@@ -89,14 +104,45 @@ func BookUpdate(c *gin.Context) {
 
 }
 
-/*func PostDelete(c *gin.Context) {
-	var book models.Book
-	id := c.Param("bookid")
-	initialazers.DB.First(&book, id)
-	initialazers.DB.Delete(&book)
-}*/
-
 func BookDelete(c *gin.Context) {
 	id := c.Param("id")
+	var count int64
+	err := initialazers.DB.Model(&models.Book{}).Where("book_id = ?", id).Count(&count).Error
+	if err != nil {
+		log.Println("could no execute query" + err.Error())
+	}
+	if count == 0 {
+		c.JSON(400, gin.H{
+			"Error": "did not find book",
+		})
+		return
+	}
 	initialazers.DB.Delete(&models.Book{}, id)
+	c.JSON(400, gin.H{
+		"Success": "Book was deleted successfully",
+	})
+}
+
+func validateBook(body models.Book) string {
+	validationErrorsToReturn := ""
+	err := initialazers.Validate.Struct(body)
+	if err != nil {
+		validationErrors := err.(validator.ValidationErrors)
+		for _, validationErr := range validationErrors {
+			log.Printf("%v", validationErr.Value())
+			if validationErr.Tag() == "uniqueIsbn" {
+				validationErrorsToReturn += fmt.Sprint("isbn must be unique. \n")
+			} else if validationErr.Tag() == "tenLetters" {
+				validationErrorsToReturn += fmt.Sprint("isbn must have 10 letters. \n")
+			} else if validationErr.Tag() == "required" {
+				validationErrorsToReturn += fmt.Sprint(validationErr.Field() + " is required. \n")
+			} else if validationErr.Tag() == "min" {
+				validationErrorsToReturn += "\n" + validationErr.Field() + " must be greater than 0. \n"
+			}
+		}
+		fmt.Println(validationErrorsToReturn)
+		return validationErrorsToReturn
+	}
+
+	return validationErrorsToReturn
 }

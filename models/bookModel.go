@@ -11,7 +11,7 @@ type Book struct {
 	Title           string  `gorm:"not null" validate:"required"`
 	Author          string  `validate:"required"`
 	PublicationYear PubYear `gorm:"type:jsonb"`
-	Isbn            string  `gorm:"size:10;not null;unique" validate:"required"`
+	Isbn            string  `gorm:"size:10;not null;unique" validate:"required,uniqueIsbn,tenLetters"`
 	NumberInShelf   int     `validate:"min=0"`
 	NumberBorrowed  int     `validate:"min=0"`
 }

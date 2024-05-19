@@ -19,6 +19,16 @@ type resultToReturn struct {
 	Processed_url string
 }
 
+func isURL(u *url.URL) string {
+
+	if u.Scheme == "" {
+		return "this url has no Scheme"
+	} else if u.Host == "" {
+		return "this url has no host"
+	}
+	return ""
+}
+
 func UrlProcess(c *gin.Context) {
 	var body bodyUrl
 	var treatmentResult models.Url
@@ -32,6 +42,14 @@ func UrlProcess(c *gin.Context) {
 	treatmentResult.UrlGiven = body.Url
 
 	parsedUrl, err := url.Parse(body.Url)
+
+	urlError := isURL(parsedUrl)
+	if urlError != "" {
+		c.JSON(200, gin.H{
+			"result": urlError,
+		})
+		return
+	}
 	if err != nil {
 		log.Fatal("error parsing the Url")
 		return
@@ -41,15 +59,15 @@ func UrlProcess(c *gin.Context) {
 	case models.Redirected:
 		log.Println("redirect " + body.Url)
 		treatmentResult.Operation = models.Redirected
-		canonicalURL(parsedUrl)
+		treatmentResult.UrlTreated = canonicalURL(parsedUrl).String()
 	case models.Canonical:
-		fmt.Println("Canonicalize " + body.Url)
+		log.Println("Canonicalize " + body.Url)
 		treatmentResult.Operation = models.Canonical
-		treatmentResult.UrlTreated = redirectedURL(parsedUrl)
+		treatmentResult.UrlTreated = redirectedURL(parsedUrl).String()
 	case models.All:
-		fmt.Println("all operations " + body.Url)
+		log.Println("all operations " + body.Url)
 		treatmentResult.Operation = models.All
-		treatmentResult.UrlTreated = processURL(parsedUrl)
+		treatmentResult.UrlTreated = processURL(parsedUrl).String()
 	default:
 		fmt.Println("Operation unknown")
 		return
@@ -70,21 +88,18 @@ func UrlProcess(c *gin.Context) {
 
 }
 
-func canonicalURL(u *url.URL) string {
-	u.RawQuery = ""                          // Remove query parameters
-	u.Path = strings.TrimSuffix(u.Path, "/") // Remove trailing slash
-	return u.String()
+func canonicalURL(u *url.URL) *url.URL {
+	u.RawQuery = ""
+	u.Path = strings.TrimSuffix(u.Path, "/")
+	return u
 }
 
-// Method for ensuring the domain is www.byfood.com and converting the entire URL to lowercase
-func redirectedURL(u *url.URL) string {
-	u.Host = "www.byfood.com"        // Ensure domain is www.byfood.com
-	u.Path = strings.ToLower(u.Path) // Convert entire URL path to lowercase
-	return u.String()
+func redirectedURL(u *url.URL) *url.URL {
+	u.Host = "www.byfood.com"
+	u.Path = strings.ToLower(u.Path)
+	return u
 }
 
-// Method for conducting both cleaning up and redirection operations on the URL
-func processURL(u *url.URL) string {
-	canonicalURL(u)
-	return redirectedURL(u)
+func processURL(u *url.URL) *url.URL {
+	return redirectedURL(canonicalURL(u))
 }
