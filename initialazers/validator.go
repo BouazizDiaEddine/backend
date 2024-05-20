@@ -3,7 +3,6 @@ package initialazers
 import (
 	"backend/models"
 	"github.com/go-playground/validator/v10"
-	"log"
 	"unicode/utf8"
 )
 
@@ -15,11 +14,11 @@ func uniqueIsbn(fl validator.FieldLevel) bool {
 	var bookId string
 	err := DB.Model(&models.Book{}).Select("book_id").Where("isbn = ?", isbnEntered).Scan(&bookId).Error
 	if err != nil {
-		log.Println("could no execute query" + err.Error())
+		Logger.Print("could no execute query" + err.Error())
 	}
 	err = DB.Model(&models.Book{}).Where("isbn = ? and book_id != ?", isbnEntered, bookId).Count(&count).Error
 	if err != nil {
-		log.Println("could no execute query" + err.Error())
+		Logger.Print("could no execute query" + err.Error())
 	}
 	if count == 0 {
 		return true

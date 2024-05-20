@@ -5,7 +5,6 @@ import (
 	"backend/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/url"
 	"strings"
 )
@@ -35,7 +34,7 @@ func UrlProcess(c *gin.Context) {
 	var toReturn resultToReturn
 	err := c.Bind(&body)
 	if err != nil {
-		log.Fatal("could not bind")
+		initialazers.Logger.Print("could not bind")
 		return
 	}
 
@@ -51,21 +50,21 @@ func UrlProcess(c *gin.Context) {
 		return
 	}
 	if err != nil {
-		log.Fatal("error parsing the Url")
+		initialazers.Logger.Print("error parsing the Url")
 		return
 	}
 
 	switch body.Operation {
 	case models.Redirected:
-		log.Println("redirect " + body.Url)
+		initialazers.Logger.Print("redirect " + body.Url)
 		treatmentResult.Operation = models.Redirected
 		treatmentResult.UrlTreated = canonicalURL(parsedUrl).String()
 	case models.Canonical:
-		log.Println("Canonicalize " + body.Url)
+		initialazers.Logger.Print("Canonicalize " + body.Url)
 		treatmentResult.Operation = models.Canonical
 		treatmentResult.UrlTreated = redirectedURL(parsedUrl).String()
 	case models.All:
-		log.Println("all operations " + body.Url)
+		initialazers.Logger.Print("all operations " + body.Url)
 		treatmentResult.Operation = models.All
 		treatmentResult.UrlTreated = processURL(parsedUrl).String()
 	default:
@@ -76,7 +75,7 @@ func UrlProcess(c *gin.Context) {
 	result := initialazers.DB.Create(&treatmentResult)
 
 	if result.Error != nil {
-		log.Fatal("could not create post")
+		initialazers.Logger.Print("could not create post")
 		c.Status(400)
 	}
 

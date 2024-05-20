@@ -6,14 +6,13 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"log"
 )
 
 func BookGetAll(c *gin.Context) {
 	var books []models.Book
 	result := initialazers.DB.Find(&books)
 	if result.Error != nil {
-		log.Println("could not retrieve objects")
+		initialazers.Logger.Print("could not retrieve objects")
 		c.JSON(400, gin.H{
 			"Error": "server might be down",
 		})
@@ -43,7 +42,7 @@ func BookCreate(c *gin.Context) {
 	var validationErrors string
 	err := c.Bind(&body)
 	if err != nil {
-		log.Println("could not bind" + err.Error())
+		initialazers.Logger.Print("could not bind" + err.Error())
 		return
 	}
 
@@ -57,7 +56,7 @@ func BookCreate(c *gin.Context) {
 	result := initialazers.DB.Create(&body)
 
 	if result.Error != nil {
-		log.Println("could not create post")
+		initialazers.Logger.Print("could not create post")
 		c.Status(400)
 	}
 	c.JSON(200, gin.H{
@@ -71,7 +70,7 @@ func BookUpdate(c *gin.Context) {
 	var book, body models.Book
 	id := c.Param("id")
 	if id == "" {
-		log.Println("no id")
+		initialazers.Logger.Print("no id")
 		return
 	}
 	initialazers.DB.First(&book, id)
@@ -84,7 +83,7 @@ func BookUpdate(c *gin.Context) {
 
 	err := c.Bind(&body)
 	if err != nil {
-		log.Println("could not bind")
+		initialazers.Logger.Print("could not bind")
 		return
 	}
 
@@ -109,7 +108,7 @@ func BookDelete(c *gin.Context) {
 	var count int64
 	err := initialazers.DB.Model(&models.Book{}).Where("book_id = ?", id).Count(&count).Error
 	if err != nil {
-		log.Println("could no execute query" + err.Error())
+		initialazers.Logger.Print("could no execute query" + err.Error())
 	}
 	if count == 0 {
 		c.JSON(400, gin.H{
@@ -129,7 +128,7 @@ func validateBook(body models.Book) string {
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
 		for _, validationErr := range validationErrors {
-			log.Printf("%v", validationErr.Value())
+			initialazers.Logger.Printf("%v", validationErr.Value())
 			if validationErr.Tag() == "uniqueIsbn" {
 				validationErrorsToReturn += fmt.Sprint("isbn must be unique. \n")
 			} else if validationErr.Tag() == "tenLetters" {
