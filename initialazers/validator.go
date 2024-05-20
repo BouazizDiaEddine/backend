@@ -11,7 +11,7 @@ var Validate = validator.New()
 func uniqueIsbn(fl validator.FieldLevel) bool {
 	isbnEntered := fl.Field().String()
 	var count int64
-	var bookId string
+	var bookId uint
 	err := DB.Model(&models.Book{}).Select("book_id").Where("isbn = ?", isbnEntered).Scan(&bookId).Error
 	if err != nil {
 		Logger.Print("could no execute query" + err.Error())

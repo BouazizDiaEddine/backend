@@ -111,13 +111,13 @@ func BookDelete(c *gin.Context) {
 		initialazers.Logger.Print("could no execute query" + err.Error())
 	}
 	if count == 0 {
-		c.JSON(400, gin.H{
+		c.JSON(404, gin.H{
 			"Error": "did not find book",
 		})
 		return
 	}
 	initialazers.DB.Delete(&models.Book{}, id)
-	c.JSON(400, gin.H{
+	c.JSON(200, gin.H{
 		"Success": "Book was deleted successfully",
 	})
 }

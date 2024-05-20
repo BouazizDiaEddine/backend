@@ -1,0 +1,143 @@
+ERROR :2024/05/19 22:48:02 urlController.go:67: all operations https://iess.com/food-EXPeriences?query=abc/
+========================================================= 
+ :2024/05/19 22:48:51 urlController.go:67: all operations https://iess.com/food-EXPeriences?query=abc/
+========================================================= 
+ :2024/05/20 14:31:16 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 14:32:42 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 15:26:40 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 15:26:40 bookController.go:131: dasadas
+========================================================= 
+ :2024/05/20 15:26:49 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 15:28:02 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 15:28:02 bookController.go:131: 12345678
+========================================================= 
+ :2024/05/20 15:28:54 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 15:28:54 bookController.go:131: 123456
+========================================================= 
+ :2024/05/20 17:57:51 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:30 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:30 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:32 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:32 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:32 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:32 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:33 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:33 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:33 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:33 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:33 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:33 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:33 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:33 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:40 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:40 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:42 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:42 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:44 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:44 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:58:45 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:58:45 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:59:19 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:59:19 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:59:19 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:59:19 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:59:19 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:59:19 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:59:23 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:59:23 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 17:59:25 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 17:59:25 bookController.go:131: wq
+========================================================= 
+ :2024/05/20 18:10:46 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:10:56 bookController.go:59: could not create post
+========================================================= 
+ :2024/05/20 18:11:00 bookController.go:59: could not create post
+========================================================= 
+ :2024/05/20 18:14:02 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:14:04 bookController.go:59: could not create post
+========================================================= 
+ :2024/05/20 18:14:41 bookController.go:59: could not create post
+========================================================= 
+ :2024/05/20 18:15:36 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:41:11 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:41:11 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:42:17 connectToDB.go:17: could not connect to dbfailed to connect to `host=localhost user=byfood database=byfood`: failed SASL auth (FATAL: password authentication failed for user "byfood" (SQLSTATE 28P01))
+========================================================= 
+ :2024/05/20 18:42:18 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:42:18 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:42:30 connectToDB.go:17: could not connect to dbfailed to connect to `host=localhost user=byfood database=byfood`: failed SASL auth (FATAL: password authentication failed for user "byfood" (SQLSTATE 28P01))
+========================================================= 
+ :2024/05/20 18:42:42 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:42:42 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:00 connectToDB.go:17: could not connect to dbfailed to connect to `host=localhost user=byfood database=byfood`: failed SASL auth (FATAL: password authentication failed for user "byfood" (SQLSTATE 28P01))
+========================================================= 
+ :2024/05/20 18:43:02 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:02 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:21 connectToDB.go:17: could not connect to dbfailed to connect to `host=localhost user=byfood database=byfood`: failed SASL auth (FATAL: password authentication failed for user "byfood" (SQLSTATE 28P01))
+========================================================= 
+ :2024/05/20 18:43:39 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:39 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:54 connectToDB.go:17: could not connect to dbfailed to connect to `host=localhost user=byfood database=byfood`: failed SASL auth (FATAL: password authentication failed for user "byfood" (SQLSTATE 28P01))
+========================================================= 
+ :2024/05/20 18:43:56 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:43:56 bookController.go:15: could not retrieve objects
+========================================================= 
+ :2024/05/20 18:47:14 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:49:19 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:53:02 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
+========================================================= 
+ :2024/05/20 18:59:44 validator.go:21: could no execute queryERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)
