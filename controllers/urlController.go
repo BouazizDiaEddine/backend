@@ -28,6 +28,16 @@ func isURL(u *url.URL) string {
 	return ""
 }
 
+// UrlProcess godoc
+// @Summary Process a URL
+// @Description Process a given URL according to the specified operation
+// @Tags urls
+// @Accept json
+// @Produce json
+// @Param body body bodyUrl true "URL and Operation"
+// @Success 200 {object} resultToReturn "Processed URL"
+// @Failure 400 {object} map[string]string "Error"
+// @Router /url [post]
 func UrlProcess(c *gin.Context) {
 	var body bodyUrl
 	var treatmentResult models.Url
@@ -75,7 +85,7 @@ func UrlProcess(c *gin.Context) {
 	result := initialazers.DB.Create(&treatmentResult)
 
 	if result.Error != nil {
-		initialazers.Logger.Print("could not create post")
+		initialazers.Logger.Print("could not create url")
 		c.Status(400)
 	}
 

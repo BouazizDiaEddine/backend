@@ -8,6 +8,14 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// BookGetAll godoc
+// @Summary Get all books
+// @Description Retrieve details of all books
+// @Tags books
+// @Produce json
+// @Success 200 {array} models.Book "List of Books"
+// @Failure 400 {object} map[string]string "Error"
+// @Router /books [get]
 func BookGetAll(c *gin.Context) {
 	var books []models.Book
 	result := initialazers.DB.Find(&books)
@@ -23,6 +31,15 @@ func BookGetAll(c *gin.Context) {
 
 }
 
+// BookGet godoc
+// @Summary Get a book by ID
+// @Description Retrieve details of a book by its ID
+// @Tags books
+// @Produce json
+// @Param id path string true "Book ID" Format(uuid)
+// @Success 200 {object} models.Book "Book Details"
+// @Failure 400 {object} map[string]string "Error"
+// @Router /books/{id} [get]
 func BookGet(c *gin.Context) {
 	var book models.Book
 	id := c.Param("id")
@@ -36,6 +53,16 @@ func BookGet(c *gin.Context) {
 	c.JSON(200, book)
 }
 
+// BookCreate godoc
+// @Summary Create a new book
+// @Description Create a new book with the given details
+// @Tags books
+// @Accept json
+// @Produce json
+// @Param book body models.Book true "Book Details"
+// @Success 200 {object} models.Book "Book Created Successfully"
+// @Failure 400 {object} map[string]string "Error"
+// @Router /book [post]
 func BookCreate(c *gin.Context) {
 
 	var body models.Book
@@ -56,7 +83,7 @@ func BookCreate(c *gin.Context) {
 	result := initialazers.DB.Create(&body)
 
 	if result.Error != nil {
-		initialazers.Logger.Print("could not create post")
+		initialazers.Logger.Print("could not create book")
 		c.Status(400)
 	}
 	c.JSON(200, gin.H{
@@ -65,6 +92,17 @@ func BookCreate(c *gin.Context) {
 
 }
 
+// BookUpdate godoc
+// @Summary Update a book
+// @Description Update details of a book by its ID
+// @Tags books
+// @Accept json
+// @Produce json
+// @Param id path string true "Book ID" Format(uint)
+// @Param book body models.Book true "Updated Book Details"
+// @Success 200 {object} models.Book "Book updated successfully"
+// @Failure 400 {object} map[string]string "Error"
+// @Router /books/{id} [put]
 func BookUpdate(c *gin.Context) {
 	validationErrors := ""
 	var book, body models.Book
@@ -103,6 +141,15 @@ func BookUpdate(c *gin.Context) {
 
 }
 
+// BookDelete godoc
+// @Summary Delete a book
+// @Description Delete a book by its ID
+// @Tags books
+// @Produce json
+// @Param id path string true "Book ID" Format(uuid)
+// @Success 200 {object} map[string]string "Success"
+// @Failure 404 {object} map[string]string "Error"
+// @Router /books/{id} [delete]
 func BookDelete(c *gin.Context) {
 	id := c.Param("id")
 	var count int64

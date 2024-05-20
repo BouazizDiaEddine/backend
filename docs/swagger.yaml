@@ -1,0 +1,224 @@
+definitions:
+  controllers.bodyUrl:
+    properties:
+      operation:
+        $ref: '#/definitions/models.Operation'
+      url:
+        type: string
+    type: object
+  controllers.resultToReturn:
+    properties:
+      processed_url:
+        type: string
+    type: object
+  models.Book:
+    properties:
+      author:
+        type: string
+      bookId:
+        type: integer
+      isbn:
+        type: string
+      numberBorrowed:
+        minimum: 0
+        type: integer
+      numberInShelf:
+        minimum: 0
+        type: integer
+      publicationYear:
+        $ref: '#/definitions/models.PubYear'
+      title:
+        type: string
+    required:
+    - author
+    - isbn
+    - title
+    type: object
+  models.Operation:
+    enum:
+    - redirected
+    - canonical
+    - all
+    type: string
+    x-enum-varnames:
+    - Redirected
+    - Canonical
+    - All
+  models.PubYear:
+    properties:
+      month:
+        type: string
+      year:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: crud book library + some URL treatment operation
+  title: byfood Library + url treatment
+  version: "1.0"
+paths:
+  /book:
+    post:
+      consumes:
+      - application/json
+      description: Create a new book with the given details
+      parameters:
+      - description: Book Details
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book Created Successfully
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new book
+      tags:
+      - books
+  /books:
+    get:
+      description: Retrieve details of all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of Books
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+        "400":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all books
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Delete a book by its ID
+      parameters:
+      - description: Book ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a book
+      tags:
+      - books
+    get:
+      description: Retrieve details of a book by its ID
+      parameters:
+      - description: Book ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book Details
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update details of a book by its ID
+      parameters:
+      - description: Book ID
+        format: uint
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Book Details
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book updated successfully
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update a book
+      tags:
+      - books
+  /url:
+    post:
+      consumes:
+      - application/json
+      description: Process a given URL according to the specified operation
+      parameters:
+      - description: URL and Operation
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.bodyUrl'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Processed URL
+          schema:
+            $ref: '#/definitions/controllers.resultToReturn'
+        "400":
+          description: Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Process a URL
+      tags:
+      - urls
+swagger: "2.0"
