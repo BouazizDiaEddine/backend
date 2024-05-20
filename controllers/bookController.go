@@ -62,7 +62,7 @@ func BookGet(c *gin.Context) {
 // @Param book body models.Book true "Book Details"
 // @Success 200 {object} models.Book "Book Created Successfully"
 // @Failure 400 {object} map[string]string "Error"
-// @Router /book [post]
+// @Router /books [post]
 func BookCreate(c *gin.Context) {
 
 	var body models.Book

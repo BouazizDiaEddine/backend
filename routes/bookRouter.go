@@ -6,9 +6,9 @@ import (
 )
 
 func BookRoutes(router *gin.Engine) {
-	router.POST("/book", controllers.BookCreate)
+	router.POST("/books", controllers.BookCreate)
 	router.GET("/books", controllers.BookGetAll)
-	router.GET("/book/:id", controllers.BookGet)
-	router.PUT("/book/:id", controllers.BookUpdate)
-	router.DELETE("/book/:id", controllers.BookDelete)
+	router.GET("/books/:id", controllers.BookGet)
+	router.PUT("/books/:id", controllers.BookUpdate)
+	router.DELETE("/books/:id", controllers.BookDelete)
 }
