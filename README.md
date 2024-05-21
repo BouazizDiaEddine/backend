@@ -9,6 +9,9 @@ sh
     docker compose up
 
 This will install and start two Docker containers: postgres-byfood and pgadmin-byfood. Make sure these containers are running before launching the application.
+
+Run migrate/main.go to create the models in the database
+
 ### Dependencies
 
 The application uses the following packages:
